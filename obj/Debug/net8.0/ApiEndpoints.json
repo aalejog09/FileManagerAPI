@@ -1,0 +1,160 @@
+[
+  {
+    "ContainingType": "FileRecordController",
+    "Method": "GetFileAsBase64",
+    "RelativePath": "api/files/base64",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filePath",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileRecordController",
+    "Method": "DownloadFile",
+    "RelativePath": "api/files/download",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filePath",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileRecordController",
+    "Method": "GetFilesByClave",
+    "RelativePath": "api/files/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "key",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileRecordController",
+    "Method": "UploadFile",
+    "RelativePath": "api/files/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Clave",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Path",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileManagerAPI.Controllers.SupportedFileController",
+    "Method": "GetAllSupportedFilesAsync",
+    "RelativePath": "api/supportedFile/allowed-extensions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileManagerAPI.Controllers.SupportedFileController",
+    "Method": "GetSupportedFileByExtensionAsync",
+    "RelativePath": "api/supportedFile/extension/{extension}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "extension",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileManagerAPI.Controllers.SupportedFileController",
+    "Method": "saveSupportedFile",
+    "RelativePath": "api/supportedFile/save",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FileManagerAPI.Models.DTO.SupportedFileDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileManagerAPI.Controllers.SupportedFileController",
+    "Method": "UpdateSupportedFile",
+    "RelativePath": "api/supportedFile/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "extension",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maxSizeKB",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileManagerAPI.Controllers.SupportedFileController",
+    "Method": "UpdateFileStatus",
+    "RelativePath": "api/supportedFile/update-status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "extension",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

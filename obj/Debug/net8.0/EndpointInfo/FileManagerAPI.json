@@ -1,0 +1,263 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API de Gestión de archivos",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/files/upload": {
+      "post": {
+        "tags": [
+          "FileRecord"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Clave": {
+                    "type": "string"
+                  },
+                  "Path": {
+                    "type": "string"
+                  },
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Clave": {
+                  "style": "form"
+                },
+                "Path": {
+                  "style": "form"
+                },
+                "File": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/download": {
+      "get": {
+        "tags": [
+          "FileRecord"
+        ],
+        "parameters": [
+          {
+            "name": "filePath",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/base64": {
+      "get": {
+        "tags": [
+          "FileRecord"
+        ],
+        "parameters": [
+          {
+            "name": "filePath",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/files/list": {
+      "get": {
+        "tags": [
+          "FileRecord"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/supportedFile/save": {
+      "post": {
+        "tags": [
+          "SupportedFile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportedFileDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportedFileDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportedFileDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/supportedFile/allowed-extensions": {
+      "get": {
+        "tags": [
+          "SupportedFile"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/supportedFile/extension/{extension}": {
+      "get": {
+        "tags": [
+          "SupportedFile"
+        ],
+        "parameters": [
+          {
+            "name": "extension",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/supportedFile/update": {
+      "put": {
+        "tags": [
+          "SupportedFile"
+        ],
+        "parameters": [
+          {
+            "name": "extension",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxSizeKB",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/supportedFile/update-status": {
+      "put": {
+        "tags": [
+          "SupportedFile"
+        ],
+        "parameters": [
+          {
+            "name": "extension",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SupportedFileDTO": {
+        "required": [
+          "extension",
+          "maxSizeKB"
+        ],
+        "type": "object",
+        "properties": {
+          "extension": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxSizeKB": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
