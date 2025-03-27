@@ -38,8 +38,7 @@
               "ViewState": "AgIAAJwAAAAAAAAAAAAAALQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
               "WhenOpened": "2025-03-25T20:04:20.932Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -57,7 +56,7 @@
               "RelativeDocumentMoniker": "Controllers\\SupportedFileController.cs",
               "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\Controllers\\SupportedFileController.cs",
               "RelativeToolTip": "Controllers\\SupportedFileController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAwwD0AAABlAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAwwDgAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T20:35:12.387Z",
               "EditorCaption": ""
@@ -72,21 +71,19 @@
               "RelativeToolTip": "Services\\SupportedFileService.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAowEEAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T20:22:37.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T20:22:37.858Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "FileManagerAPI",
+              "Title": "FileManagerAPI.csproj",
               "DocumentMoniker": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
               "RelativeDocumentMoniker": "FileManagerAPI.csproj",
               "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
               "RelativeToolTip": "FileManagerAPI.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-25T20:02:33.101Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T20:02:33.101Z"
             }
           ]
         }

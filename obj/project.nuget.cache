@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AE9An88a4dY=",
+  "dgSpecHash": "O7wDhzXjEpQ=",
   "success": true,
-  "projectFilePath": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
+  "projectFilePath": "C:\\proyectos\\personal\\FileManagerAPI\\FileManagerAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\administrador\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\administrador\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

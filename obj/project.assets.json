@@ -4448,11 +4448,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
+      "projectUniqueName": "C:\\proyectos\\personal\\FileManagerAPI\\FileManagerAPI.csproj",
       "projectName": "FileManagerAPI",
-      "projectPath": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
+      "projectPath": "C:\\proyectos\\personal\\FileManagerAPI\\FileManagerAPI.csproj",
       "packagesPath": "C:\\Users\\administrador\\.nuget\\packages\\",
-      "outputPath": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\obj\\",
+      "outputPath": "C:\\proyectos\\personal\\FileManagerAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

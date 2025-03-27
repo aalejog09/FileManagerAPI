@@ -1,8 +1,8 @@
 [
   {
     "ContainingType": "FileRecordController",
-    "Method": "GetFileAsBase64",
-    "RelativePath": "api/files/base64",
+    "Method": "DownloadFile",
+    "RelativePath": "api/files/download",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -17,8 +17,8 @@
   },
   {
     "ContainingType": "FileRecordController",
-    "Method": "DownloadFile",
-    "RelativePath": "api/files/download",
+    "Method": "GetFileAsBase64",
+    "RelativePath": "api/files/download/base64",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

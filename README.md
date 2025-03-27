@@ -11,7 +11,7 @@ ademas de activar y desactivarlos, asi como tambien el puerto de despliegue y la
 
 
 - **Almacenamiento y Descarga de archivos en formato original y Base64**
-- **Configuraci�n flexible** para los tipos de extencion de archivos soportados y el espacio que ocuparan cada tipo de extension.
+- **Configuracion flexible** para los tipos de extencion de archivos soportados y el espacio que ocuparan cada tipo de extension.
 - **Base de datos SQL Server** para la configuracion de tipos de extencion y las rutas de cada archivo
 - **Desarrollado en .NET 8.0**.
 
@@ -203,7 +203,7 @@ Si existe mostrara el siguiente mensaje (extension=pdf , maxSizeKB=10000)
 
 ##### **Actualizar el status de tipo de extension** 
 HTTP PUT **UpdateExtensionStatus server/api/supportedFile/update?extension={extension}&status={status}**
-Solo actualiza el peso de la extension.
+Solo actualiza el status de la extension.
 
 Si existe mostrara el siguiente mensaje (extension=pdf , status=true)
 

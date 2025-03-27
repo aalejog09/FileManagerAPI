@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "6cd736f4-f3ad-46a6-9c87-c4fb8a8b32be",
+		"name": "FileManagerAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43025321",
+		"_collection_link": "https://ex-cle-9081.postman.co/workspace/Ex-cle-Workspace~f2636cd0-a5de-42b6-87ce-480c260fcf6a/collection/43025321-6cd736f4-f3ad-46a6-9c87-c4fb8a8b32be?action=share&source=collection_link&creator=43025321"
+	},
+	"item": [
+		{
+			"name": "FileRecords",
+			"item": [
+				{
+					"name": "uploadFile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "clave",
+									"value": "V1234566",
+									"type": "text"
+								},
+								{
+									"key": "path",
+									"value": "C:\\\\UPLOADS\\\\",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1f00b0d9-709f-4d20-9a8e-0d16963c2a08"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{fileServer}}/api/files/upload",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFileRecordPathsByKey",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{fileServer}}/api/files/list?key=V1234566",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"list"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "V1234566"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donwloadFileByPath",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/octet-stream",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{fileServer}}/api/files/download?filePath=C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"download"
+							],
+							"query": [
+								{
+									"key": "filePath",
+									"value": "C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donwloadFileByPath Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/octet-stream",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{fileServer}}/api/files/download/base64?filePath=C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"download",
+								"base64"
+							],
+							"query": [
+								{
+									"key": "filePath",
+									"value": "C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FileSupported",
+			"item": [
+				{
+					"name": "createSupportedFilleSettings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"extension\": \"sdf\",\r\n  \"maxSizeKB\": 185000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{fileServer}}/api/supportedFile/save",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"supportedFile",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllowedExtensions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{fileServer}}/api/supportedFile/allowed-extensions",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"supportedFile",
+								"allowed-extensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getExtensionByType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{fileServer}}/api/supportedFile/extension/aaaa",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"supportedFile",
+								"extension",
+								"aaaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateExtesionMaxSizeKB",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{fileServer}}/api/supportedFile/update?extension=png&maxSizeKB=200000",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"supportedFile",
+								"update"
+							],
+							"query": [
+								{
+									"key": "extension",
+									"value": "png"
+								},
+								{
+									"key": "maxSizeKB",
+									"value": "200000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateExtesionStatus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{fileServer}}/api/supportedFile/update-status?extension=pdf&status=true",
+							"host": [
+								"{{fileServer}}"
+							],
+							"path": [
+								"api",
+								"supportedFile",
+								"update-status"
+							],
+							"query": [
+								{
+									"key": "extension",
+									"value": "pdf"
+								},
+								{
+									"key": "status",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

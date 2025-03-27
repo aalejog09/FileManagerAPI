@@ -1,20 +1,20 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\",
+  "WorkspaceRootPath": "C:\\proyectos\\personal\\FileManagerAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filestorageapi\\filemanagerapi\\controllers\\supportedfilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filemanagerapi\\controllers\\supportedfilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|solutionrelative:controllers\\supportedfilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filestorageapi\\filemanagerapi\\services\\supportedfileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filemanagerapi\\services\\supportedfileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|solutionrelative:services\\supportedfileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\proyectos\\personal\\FileStorageAPI\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filestorageapi\\filemanagerapi\\filemanagerapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|c:\\proyectos\\personal\\filemanagerapi\\filemanagerapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{5F8B0733-5AAE-4734-916C-11A6ED8B633E}|FileManagerAPI.csproj|solutionrelative:filemanagerapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -32,9 +32,9 @@
               "DocumentIndex": 2,
               "Title": "README.md",
               "DocumentMoniker": "C:\\proyectos\\personal\\FileStorageAPI\\README.md",
-              "RelativeDocumentMoniker": "..\\README.md",
+              "RelativeDocumentMoniker": "..\\FileStorageAPI\\README.md",
               "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\README.md",
-              "RelativeToolTip": "..\\README.md",
+              "RelativeToolTip": "..\\FileStorageAPI\\README.md",
               "ViewState": "AgIAAJwAAAAAAAAAAAAAALQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
               "WhenOpened": "2025-03-25T20:04:20.932Z",
@@ -52,9 +52,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "SupportedFileController.cs",
-              "DocumentMoniker": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\Controllers\\SupportedFileController.cs",
+              "DocumentMoniker": "C:\\proyectos\\personal\\FileManagerAPI\\Controllers\\SupportedFileController.cs",
               "RelativeDocumentMoniker": "Controllers\\SupportedFileController.cs",
-              "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\Controllers\\SupportedFileController.cs",
+              "ToolTip": "C:\\proyectos\\personal\\FileManagerAPI\\Controllers\\SupportedFileController.cs",
               "RelativeToolTip": "Controllers\\SupportedFileController.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAwwDgAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -65,9 +65,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "SupportedFileService.cs",
-              "DocumentMoniker": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\Services\\SupportedFileService.cs",
+              "DocumentMoniker": "C:\\proyectos\\personal\\FileManagerAPI\\Services\\SupportedFileService.cs",
               "RelativeDocumentMoniker": "Services\\SupportedFileService.cs",
-              "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\Services\\SupportedFileService.cs",
+              "ToolTip": "C:\\proyectos\\personal\\FileManagerAPI\\Services\\SupportedFileService.cs",
               "RelativeToolTip": "Services\\SupportedFileService.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAowEEAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -77,9 +77,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "FileManagerAPI.csproj",
-              "DocumentMoniker": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
+              "DocumentMoniker": "C:\\proyectos\\personal\\FileManagerAPI\\FileManagerAPI.csproj",
               "RelativeDocumentMoniker": "FileManagerAPI.csproj",
-              "ToolTip": "C:\\proyectos\\personal\\FileStorageAPI\\FileManagerAPI\\FileManagerAPI.csproj",
+              "ToolTip": "C:\\proyectos\\personal\\FileManagerAPI\\FileManagerAPI.csproj",
               "RelativeToolTip": "FileManagerAPI.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
