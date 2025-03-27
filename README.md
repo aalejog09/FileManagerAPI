@@ -1,11 +1,11 @@
-# FileStorageAPI
-Esta aplicaci�n es una **API REST** desarrollada en **.NET 8.0** para gestion de archivos.
+# FileManagerAPI
+Esta aplicacion es una **API REST** desarrollada en **.NET 8.0** para gestion de archivos.
 
 ## Descripcion
 
 La API permite la gestion de archivos para ser almacenados en ubicaciones especificadas y por una **clave unica** para serparar los "file owners".
-la configuraci�n de la aplicaci�n se puede ajustar para adaptarse a tus necesidades, ya que permite administrar las extenciones de archivos y el espacio que ocupan, 
-ademas de activar y desactivarlos, asi como tambien el puerto de despliegue y la configuraci�n de la base de datos.
+la configuracion de la aplicacion se puede ajustar para adaptarse a tus necesidades, ya que permite administrar las extenciones de archivos y el espacio que ocupan, 
+ademas de activar y desactivarlos, asi como tambien el puerto de despliegue y la configuracion de la base de datos.
 
 ## Caracteristicas
 
@@ -17,8 +17,8 @@ ademas de activar y desactivarlos, asi como tambien el puerto de despliegue y la
 
 ## Requisitos
 
-- **.NET 8.0**: Aseg�rate de tener instalada la versi�n correcta de .NET en tu m�quina. Puedes descargarla desde [aqu�](https://dotnet.microsoft.com/download/dotnet).
-- **SQL Server**: La aplicaci�n usa una base de datos SQL Server para almacenar la configuraci�n del servidor SMTP. Puedes descargarla desde [aqu�](https://www.microsoft.com/es-es/sql-server/sql-server-downloads)
+- **.NET 8.0**: Asegurate de tener instalada la version correcta de .NET en tu maquina. Puedes descargarla desde [aqui](https://dotnet.microsoft.com/download/dotnet).
+- **SQL Server**: La aplicacion usa una base de datos SQL Server para almacenar la configuracion del servidor SMTP. Puedes descargarla desde [aqui](https://www.microsoft.com/es-es/sql-server/sql-server-downloads)
 - **Nugget packages** en la configuracion del proyecto podras observar la paqueteria requerida para su correcto funcionamiento.
 
 ```xml
@@ -41,7 +41,7 @@ ademas de activar y desactivarlos, asi como tambien el puerto de despliegue y la
 
 ### Base de Datos
 
-La aplicaci�n utiliza una base de datos SQL Server (v20.2) para almacenar la configuraci�n relacionada con los tipos de extension de archivos que podran almacenarse,
+La aplicacion utiliza una base de datos SQL Server (v20.2) para almacenar la configuracion relacionada con los tipos de extension de archivos que podran almacenarse,
 el peso de los mismos y la disponibilidad para gestionar archivos del tipo especificado. Asi como tambien la informacion asociada al archivo (Nombre, ruta completa 
 y un campo clave que identifica la ubicacion especifica del archivo, es decir, la ultima carpeta donde esta almacenado el archivo)
 
@@ -104,16 +104,16 @@ el appsettings  contiene la configuracion inicial de la aplicacion, donde se deb
 ### TEST 
 
 La app cuenta con el apartado de SWAGGER una vez ha sido desplegada, asi como la coleccion de postman con la informacion necesaria en el siguiente enlace:
-[Descargar colección de Postman](https://github.com/aalejog09/FileStorageAPI/blob/main/doc/postman/FileManagerAPI.postman_collection.json)
+[Descargar colección de Postman](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/postman/FileManagerAPI.postman_collection.json)
 
 Asi mismo, se detallan los servicios desarrollados a continuacion: 
 
 ### Servicios de Tipos de extension soportados (SupportedFiles)
 El Api cuenta con rutas para realizar las operaciones de creacion, lectura, listas y actualizacion de datos y estados para los tipos de extension (**SupportedFiles**)
 
-Se puede crear un tipo de extencion especificando el nombre de la extension y el tama�o maximo permitido para los archivos que seran almacenados con esa extension.
-Adicionalmente se puede actualizar el nombre y tama�o maximo permitido, asi como habilitar o deshabilitar el tipo de extension. 
-**NOTA: Si el tipo de extension no existe o esta deshabilitado, no se permitir� la gestion de los archivo de ese tipo de extension**
+Se puede crear un tipo de extencion especificando el nombre de la extension y el peso maximo permitido para los archivos que seran almacenados con esa extension.
+Adicionalmente se puede actualizar el nombre y peso maximo permitido, asi como habilitar o deshabilitar el tipo de extension. 
+**NOTA: Si el tipo de extension no existe o esta deshabilitado, no se permitira la gestion de los archivo de ese tipo de extension**
 
 
 Los datos de los Json estan especificados en el servicio de **SWAGGER** configurado.
@@ -241,7 +241,7 @@ archivo: [Archivo adjunto] // el archivo a subir
 
 asi como se muestra en la imagen :
 
-![Imagen de prueba](https://github.com/aalejog09/FileStorageAPI/blob/main/doc/Example_Form-data.png?raw=true)
+![Imagen de prueba](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/Example_Form-data.png?raw=true)
 
 el resultado de guardar exitosamente un archivo seria: 
 
@@ -256,7 +256,7 @@ teniendo en cuenta los datos : Clave=V1234566 , path= C:\\UPLOADS\\ , file=image
 
 Y en el sistema de archivos se podria observar de la siguiente manera:
 
-![Imagen de prueba](https://github.com/aalejog09/FileStorageAPI/blob/main/doc/ExampleUploadSuccess.png?raw=true)
+![Imagen de prueba](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/ExampleUploadSuccess.png?raw=true)
 
 ##### **Lista de rutas de archivos**  
 HTTP GET **getFileRecordPathsByKey server/api/files/list?key={clave}**
@@ -287,7 +287,7 @@ ejemplo:
 
 Al consultar el servicio se obtiene el archivo para ser descargado de manera inmediata y se debe observar en el navegador la siguiente forma:
 
-![Imagen de prueba](https://github.com/aalejog09/FileStorageAPI/blob/main/doc/ExampleDownloadSuccess.png?raw=true)
+![Imagen de prueba](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/ExampleDownloadSuccess.png?raw=true)
 
 ##### **Descargar archivo por ruta (base64)**  
 HTTP GET **downloadFileByPath server/api/files/download/base64?filePath={absolutePath}**
@@ -304,7 +304,7 @@ si desea verificar el contenido del base64 puede usar el siguiente enlace : [Dec
 
 y puede observar el resultado de la siguiente forma:
 
-![Imagen de prueba](https://github.com/aalejog09/FileStorageAPI/blob/main/doc/ExampleDownloadSuccessBase64.png?raw=true)
+![Imagen de prueba](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/ExampleDownloadSuccessBase64.png?raw=true)
 
 
 ## Creditos
