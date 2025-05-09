@@ -56,6 +56,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "Clave",
         "Type": "System.String",
         "IsRequired": false
@@ -130,7 +135,7 @@
       },
       {
         "Name": "maxSizeKB",
-        "Type": "System.Decimal",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],

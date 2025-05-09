@@ -23,15 +23,9 @@ namespace FileManagerAPI.Controllers
         [HttpPost("save")]
         public async Task<IActionResult> saveSupportedFile([FromBody] SupportedFileDTO request)
         {
-            try 
-            {
                 var supportedFile = await _SupportedFileService.SaveSupportedFileAsync(request);
-                return Ok(new { Message = "SupportedFile added successfully.", Data = supportedFile });
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
+                return Ok(supportedFile);
+           
         }
 
         [HttpGet("allowed-extensions")]
@@ -42,7 +36,7 @@ namespace FileManagerAPI.Controllers
             if (activeSupportedFiles == null)
                 return NotFound("There are not supported files");
 
-            return Ok(new {Message="OK", Data=activeSupportedFiles});
+            return Ok(activeSupportedFiles);
 
         }
         [HttpGet("extension/{extension}")]
@@ -51,44 +45,23 @@ namespace FileManagerAPI.Controllers
 
             var supportedFiles = await _SupportedFileService.GetFileSettingsAsync(extension);
 
-            if (supportedFiles == null)
-                return NotFound(new {Message=$"the extension [.{extension}] does not exist." , Data ="{}"});
-
-            return Ok(new { Message = "OK", Data = supportedFiles });
+            return Ok(supportedFiles);
         }
 
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateSupportedFile([FromQuery] string extension, [FromQuery] decimal maxSizeKB)
+        public async Task<IActionResult> UpdateSupportedFile([FromQuery] string extension, [FromQuery] string maxSizeKB)
         {
-            try
-            {
                 var updatedFile = await _SupportedFileService.UpdateSupportedFileAsync(extension, maxSizeKB);
-
-                if (updatedFile == null)
-                    return NotFound(new { Message = $"The file extension [.{extension}] was not found." });
-
-                return Ok(new { Message = $"The file extension [.{extension}] was updated successfully.", Data = updatedFile });
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "An error occurred while updating the supported file.", Error = ex.Message });
-            }
+                return Ok(updatedFile);
+            
         }
 
         [HttpPut("update-status")]
         public async Task<IActionResult> UpdateFileStatus([FromQuery] string extension, [FromQuery] bool status)
         {
             var updatedFile = await _SupportedFileService.UpdateFileStatusAsync(extension, status);
-
-            if (updatedFile == null)
-                return NotFound(new { Message = $"The file extension [.{extension}] was not found." });
-
-            return Ok(new { Message = $"The status of the file extension [.{extension} ] was updated successfully.", Data = updatedFile });
+            return Ok(updatedFile);
         }
 
 

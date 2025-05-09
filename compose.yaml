@@ -1,0 +1,32 @@
+version: '3'
+services:
+  #gasco-bd:
+  #  image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+  #  environment:
+  #    ACCEPT_EULA: 'Y'
+  #    MSSQL_SA_PASSWORD: 'Abcd1234.'
+  #    MSSQL_DATA_DIR: /var/opt/mssql/data
+  #    MSSQL_PID: 'Developer' 
+  #    MSSQL_TCP_PORT: 1433 
+  #  ports: 
+  #    - "1433:1433"
+  #  networks:
+  #    - filemanager-net
+  filemanager-api:
+    build: ./
+    image: registry2.ex-cle.com/gasco/filemanager-api
+    ports: [
+      "8082:8082"
+    ]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - gasco-net
+#    depends_on:
+#      - gasco-bd
+    command: sh -c "sleep 10 && sh ./entrypoint.sh"
+    restart: unless-stopped
+
+networks:
+  gasco-net:
+    external: true

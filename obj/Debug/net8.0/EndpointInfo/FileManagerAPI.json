@@ -16,6 +16,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "FileName": {
+                    "type": "string"
+                  },
                   "Clave": {
                     "type": "string"
                   },
@@ -29,6 +32,9 @@
                 }
               },
               "encoding": {
+                "FileName": {
+                  "style": "form"
+                },
                 "Clave": {
                   "style": "form"
                 },
@@ -194,8 +200,7 @@
             "name": "maxSizeKB",
             "in": "query",
             "schema": {
-              "type": "number",
-              "format": "double"
+              "type": "string"
             }
           }
         ],
@@ -249,8 +254,8 @@
             "nullable": true
           },
           "maxSizeKB": {
-            "type": "number",
-            "format": "double"
+            "type": "string",
+            "nullable": true
           },
           "status": {
             "type": "boolean"

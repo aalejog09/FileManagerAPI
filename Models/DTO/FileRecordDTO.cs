@@ -5,12 +5,15 @@ namespace FileManagerAPI.Models.DTO
 {
     public class FileRecordDTO
     {
+        public string? FileName { get; set; }
 
         [Required]
-        public string FilePath { get; set; }
+        public string? FilePath { get; set; }
 
-        public string CreatedAt { get; set; } 
+        public string? CreatedAt { get; set; }
 
-        public double Size { get; set; }
+        public string? UpdatedAt { get; set; }
+
+        public string? Size { get; set; }
     }
 }

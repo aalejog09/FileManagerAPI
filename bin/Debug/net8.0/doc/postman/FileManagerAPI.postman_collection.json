@@ -19,19 +19,24 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "clave",
-									"value": "V1234566",
+									"key": "Clave",
+									"value": "J0031378",
 									"type": "text"
 								},
 								{
-									"key": "path",
-									"value": "C:\\\\UPLOADS\\\\",
-									"type": "text"
-								},
-								{
-									"key": "file",
+									"key": "File",
 									"type": "file",
 									"src": "postman-cloud:///1f00b0d9-709f-4d20-9a8e-0d16963c2a08"
+								},
+								{
+									"key": "Path",
+									"value": "BASE\\J00313781\\ARA001\\",
+									"type": "text"
+								},
+								{
+									"key": "FileName",
+									"value": "otra prueba, mas ádíos,",
+									"type": "text"
 								}
 							]
 						},
@@ -55,9 +60,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{fileServer}}/api/files/list?key=V1234566",
+							"raw": "{{FileServerNube}}/api/files/list?key=J0031378",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -67,7 +72,7 @@
 							"query": [
 								{
 									"key": "key",
-									"value": "V1234566"
+									"value": "J0031378"
 								}
 							]
 						}
@@ -86,9 +91,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{fileServer}}/api/files/download?filePath=C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png",
+							"raw": "{{FileServerNube}}/api/files/download?filePath=BASE\\\\J00313781\\\\ARA001\\\\ESTOESU_N_NOMBRE_B4S.png",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -98,7 +103,7 @@
 							"query": [
 								{
 									"key": "filePath",
-									"value": "C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png"
+									"value": "BASE\\\\J00313781\\\\ARA001\\\\ESTOESU_N_NOMBRE_B4S.png"
 								}
 							]
 						}
@@ -117,9 +122,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{fileServer}}/api/files/download/base64?filePath=C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png",
+							"raw": "{{FileServerNube}}/api/files/download/base64?filePath=BASE\\\\J00313781\\\\ARA001\\\\ESTOESU_N_NOMBRE_B4S.png",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -130,7 +135,7 @@
 							"query": [
 								{
 									"key": "filePath",
-									"value": "C:\\\\\\\\UPLOADS\\\\\\\\V1234566\\\\imagenDePrueba.png"
+									"value": "BASE\\\\J00313781\\\\ARA001\\\\ESTOESU_N_NOMBRE_B4S.png"
 								}
 							]
 						}
@@ -149,7 +154,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"extension\": \"sdf\",\r\n  \"maxSizeKB\": 185000\r\n}",
+							"raw": "{\r\n  \"extension\": \"pngs\",\r\n  \"maxSizeKB\": \"22,00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -157,9 +162,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{fileServer}}/api/supportedFile/save",
+							"raw": "{{FileServerNube}}/api/supportedFile/save",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -176,9 +181,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{fileServer}}/api/supportedFile/allowed-extensions",
+							"raw": "{{FileServerNube}}/api/supportedFile/allowed-extensions",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -195,15 +200,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{fileServer}}/api/supportedFile/extension/aaaa",
+							"raw": "{{FileServerNube}}/api/supportedFile/extension/pngaaaa",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
 								"supportedFile",
 								"extension",
-								"aaaa"
+								"pngaaaa"
 							]
 						}
 					},
@@ -215,9 +220,9 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{fileServer}}/api/supportedFile/update?extension=png&maxSizeKB=200000",
+							"raw": "{{FileServerNube}}/api/supportedFile/update?extension=xlsx&maxSizeKB=1222",
 							"host": [
-								"{{fileServer}}"
+								"{{FileServerNube}}"
 							],
 							"path": [
 								"api",
@@ -227,11 +232,11 @@
 							"query": [
 								{
 									"key": "extension",
-									"value": "png"
+									"value": "xlsx"
 								},
 								{
 									"key": "maxSizeKB",
-									"value": "200000"
+									"value": "1222"
 								}
 							]
 						}
@@ -244,7 +249,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{fileServer}}/api/supportedFile/update-status?extension=pdf&status=true",
+							"raw": "{{fileServer}}/api/supportedFile/update-status?extension=pdf&status=false",
 							"host": [
 								"{{fileServer}}"
 							],
@@ -260,7 +265,7 @@
 								},
 								{
 									"key": "status",
-									"value": "true"
+									"value": "false"
 								}
 							]
 						}

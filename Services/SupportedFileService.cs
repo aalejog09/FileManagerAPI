@@ -1,127 +1,227 @@
-﻿using FileManagerAPI.Models;
+﻿using Azure;
+using FileManagerAPI.Models;
 using FileManagerAPI.Models.DTO;
+using FileManagerAPI.Utils.Exceptions;
 using FileStorageApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Drawing;
+using System.Globalization;
 using System.Runtime.Versioning;
+using System.Text.RegularExpressions;
 
 namespace FileManagerAPI.Services
 {
-    public class SupportedFileService
+    public class SupportedFileService(DataContext context, ErrorService errorService)
     {
 
-        private readonly DataContext _context;
+        private readonly DataContext _context = context;
+        private readonly ErrorService _errorService = errorService;
 
-        public SupportedFileService(DataContext context)
-        {
-            _context = context;
-        }
-        public async Task<List<SupportedFile>> GetSupportedFileAsync()
+        public async Task<JSendResponse<List<SupportedFile>>> GetSupportedFileAsync()
         {
 
             var supportedFileList = await _context.SupportedFiles
                 .OrderByDescending(f => f.Id)
                 .ToListAsync();
 
-            return supportedFileList;
+            if (!supportedFileList.Any())
+                throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encontraron Extensiones");
+
+
+            return new JSendResponse<List<SupportedFile>> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensiones encontradas.", Data = supportedFileList };
+
         }
 
-        public async Task<SupportedFileDTO?> GetFileSettingsAsync(string extension)
+        public async Task<JSendResponse<SupportedFileRsDTO>> GetFileSettingsAsync(string extension)
         {
             var supportedFile = await _context.SupportedFiles
-                .Where(f => f.Extension == extension ) 
+                .Where(f => f.Extension == extension)
                 .FirstOrDefaultAsync();
-            if (supportedFile == null)
-                return null;
 
-            return new SupportedFileDTO { Extension = supportedFile.Extension, MaxSizeKB = supportedFile.MaxSizeKB, Status = supportedFile.Status };
+            if (supportedFile == null)
+                throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encontró la extensión: [{extension}].");
+
+            return new JSendResponse<SupportedFileRsDTO> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensión encontrada.", Data = MapToDTO(supportedFile) };
+
         }
 
-        public async Task<SupportedFileDTO> SaveSupportedFileAsync(SupportedFileDTO supportedFile)
+        public async Task<JSendResponse<decimal>> GetMaxFileSizeByExtension(string extension)
+        {
+            var supportedFile = await _context.SupportedFiles
+                .Where(f => f.Extension == extension)
+                .FirstOrDefaultAsync();
+
+            if (supportedFile == null)
+                throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encontró la extension: [{extension}].");
+
+            return new JSendResponse<decimal> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensión encontrada.", Data = supportedFile.MaxSizeKB };
+
+        }
+
+        public async Task<JSendResponse<SupportedFileRsDTO>> SaveSupportedFileAsync(SupportedFileDTO supportedFile)
         {
             if (string.IsNullOrWhiteSpace(supportedFile.Extension))
-                throw new ArgumentException("The file extension cannot be null or empty.");
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, "La extensión es requerida.");
 
-            if (supportedFile.MaxSizeKB <= 0)
-                throw new ArgumentException("The maximum file size must be greater than zero.");
 
-            // ✅ Convertir la extensión a minúsculas para evitar duplicados con mayúsculas
+            string[] errors = ValidateSupportedFile(supportedFile);
+            if (errors.Length != 0)
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, errors);
+
+            // Normalizamos MaxSizeKB (Reemplazar ',' por '.')
+            string normalizedMaxSizeKB = supportedFile.MaxSizeKB.Replace(",", ".");
+
+            // Intentamos convertir el string a decimal
+            if (!decimal.TryParse(normalizedMaxSizeKB, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedMaxSizeKB))
+            {
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, "El formato del tamaño de la extensión es inválido.");
+            }
+
+            decimal MaxSizeKbDecimal = parsedMaxSizeKB;
+
+            //  Convertir la extensión a minúsculas para evitar duplicados con mayúsculas
             supportedFile.Extension = supportedFile.Extension.Trim().ToLower();
 
-            // ✅ Verificar si la extensión ya existe
+            // Verificar si la extensión ya existe
             var existingFile = await _context.SupportedFiles
                 .FirstOrDefaultAsync(f => f.Extension == supportedFile.Extension);
 
             if (existingFile != null)
-                throw new InvalidOperationException($"The extension '{supportedFile.Extension}' is already registered.");
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, $"La extensión [{supportedFile.Extension}] ya se encuentra registrada.");
 
 
-            var newSupportedFile = new SupportedFile { Extension = supportedFile.Extension, MaxSizeKB = supportedFile.MaxSizeKB, Status = true};
+            supportedFile.MaxSizeKB = supportedFile.MaxSizeKB;
+            var newSupportedFile = new SupportedFile { Extension = supportedFile.Extension, MaxSizeKB = (MaxSizeKbDecimal), Status = true };
             _context.SupportedFiles.Add(newSupportedFile);
             await _context.SaveChangesAsync();
-            return new SupportedFileDTO {Extension = newSupportedFile.Extension, MaxSizeKB = newSupportedFile.MaxSizeKB, Status = newSupportedFile.Status } ;
+            return new JSendResponse<SupportedFileRsDTO> { Status = ResponseStatus.SUCCESS, Code = 201, Message = "Extensión registrada con éxito.", Data = MapToDTO(newSupportedFile) };
+
         }
 
-        public async Task<SupportedFileDTO?> UpdateSupportedFileAsync(string extension, decimal maxSizeKB)
+        public async Task<JSendResponse<SupportedFileRsDTO>> UpdateSupportedFileAsync(string extension, string maxSizeKB)
         {
+            if (string.IsNullOrWhiteSpace(extension))
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, "La extensión es requerida.");
+
+            string[] errors = ValidateSupportedFile(new SupportedFileDTO { Extension=extension, MaxSizeKB=maxSizeKB});
+            if (errors.Length != 0)
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, errors);
+
             var supportedFile = await _context.SupportedFiles
-                .FirstOrDefaultAsync(f => f.Extension == extension.ToLower());
+                .FirstOrDefaultAsync(f => f.Extension == extension.ToLower()) ?? throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encotro la extensión solicitada.");
 
-            if (supportedFile == null)
-                return null;
+            if (!decimal.TryParse(maxSizeKB.Trim().Replace(",", "."), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal sizeKB))
+            {
+                throw _errorService.GetApiException(ErrorCodes.BadRequest, "El campo MaxSizeKB debe ser un número decimal válido.");
+            }
 
-            if (maxSizeKB <= 0)
-                throw new ArgumentException("The maximum file size must be greater than zero.");
-
-            supportedFile.MaxSizeKB = maxSizeKB;
+            supportedFile.MaxSizeKB = sizeKB;
 
             _context.SupportedFiles.Update(supportedFile);
             await _context.SaveChangesAsync();
 
+            return new JSendResponse<SupportedFileRsDTO> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensión actualizada con éxito.", Data = MapToDTO(supportedFile) };
 
-
-            return new SupportedFileDTO {Extension = supportedFile.Extension, MaxSizeKB = supportedFile.MaxSizeKB, Status = supportedFile.Status } ;
         }
 
-        public async Task<SupportedFileDTO?> UpdateFileStatusAsync(string extension, bool newStatus)
+        public async Task<JSendResponse<SupportedFileRsDTO>> UpdateFileStatusAsync(string extension, bool newStatus)
         {
             var supportedFile = await _context.SupportedFiles
-                .FirstOrDefaultAsync(f => f.Extension == extension.ToLower());
-
-            if (supportedFile == null)
-                return null;
-
+                .FirstOrDefaultAsync(f => f.Extension == extension.ToLower()) ?? throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encotro la extensión solicitada.");
             supportedFile.Status = newStatus;
 
             _context.SupportedFiles.Update(supportedFile);
             await _context.SaveChangesAsync();
+            return new JSendResponse<SupportedFileRsDTO> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensión actualizada con éxito.", Data = MapToDTO(supportedFile) };
 
-            return new SupportedFileDTO {Extension = supportedFile.Extension, MaxSizeKB = supportedFile.MaxSizeKB, Status = supportedFile.Status } ;
         }
 
-        public async Task<List<SupportedFileDTO>?> GetAllSupportedFilesAsync()
+        public async Task<JSendResponse<List<SupportedFileRsDTO>>> GetAllSupportedFilesAsync()
         {
-            List<SupportedFile> supportedFileList = await GetSupportedFileAsync();
 
-            if (supportedFileList.Count <= 0)
-                return null;
-           
-            List<SupportedFileDTO> supportedFileDTOList = MapSupportedFileToDTOList(supportedFileList);
+            var response = await GetSupportedFileAsync();
 
-            return supportedFileDTOList;
+            if (response.Data == null || !response.Data.Any())
+                throw _errorService.GetApiException(ErrorCodes.NotFound, $"No se encotraron extensiones.");
+
+
+            return new JSendResponse<List<SupportedFileRsDTO>> { Status = ResponseStatus.SUCCESS, Code = 200, Message = "Extensiones encontradas", Data = MapSupportedFileToDTOList(response.Data) };
+
         }
 
-        public List<SupportedFileDTO> MapSupportedFileToDTOList(List<SupportedFile> supportedFileList)
+        public List<SupportedFileRsDTO> MapSupportedFileToDTOList(List<SupportedFile> supportedFileList)
         {
-            List<SupportedFileDTO> supportedFileDTOList = new List<SupportedFileDTO>();
+            List<SupportedFileRsDTO> supportedFileDTOList = new List<SupportedFileRsDTO>();
             foreach (var item in supportedFileList)
             {
-                var supportedFileDTO = new SupportedFileDTO { Extension = item.Extension, MaxSizeKB = item.MaxSizeKB, Status = item.Status };
+                var supportedFileDTO = MapToDTO(item);
                 supportedFileDTOList.Add(supportedFileDTO);
             }
             return supportedFileDTOList;
         }
+
+
+
+
+        public SupportedFileRsDTO MapToDTO(SupportedFile entity)
+        {
+            return new SupportedFileRsDTO { Extension = entity.Extension, MaxSizeKB = $"{entity.MaxSizeKB:F2} KB", Status = entity.Status };
+        }
+
+
+
+        public string[] ValidateSupportedFile(SupportedFileDTO input)
+        {
+            List<string> validationErrors =
+            [
+                .. ValidateExtension(input.Extension),
+                .. ValidateMaxSizeKB(input.MaxSizeKB),
+            ];
+
+            return validationErrors.ToArray();
+        }
+
+        private static List<string> ValidateExtension(string? extension)
+        {
+            List<string> errors = new();
+
+            if (string.IsNullOrWhiteSpace(extension))
+            {
+                errors.Add("La extensión no puede estar vacía.");
+            }
+            else
+            {
+                if (extension.Length > 5)
+                    errors.Add("La extensión no puede tener más de 5 caracteres.");
+
+                if (!Regex.IsMatch(extension, @"^[a-zA-Z1-9]+$"))
+                    errors.Add("La extensión solo puede contener letras (a-z, A-Z) y números (1-9), sin acentos ni caracteres especiales.");
+            }
+
+            return errors;
+        }
+
+        private List<string> ValidateMaxSizeKB(string? maxSizeKB)
+        {
+            List<string> errors = new();
+
+            const decimal maxAllowed = 29296.87m; // 30 MB en KB
+            string? normalizedSize = maxSizeKB?.Trim();
+
+            if (!decimal.TryParse(normalizedSize, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal sizeKB))
+            {
+                errors.Add("El campo MaxSizeKB debe ser un número válido.");
+            }
+            else
+            {
+                if (sizeKB > maxAllowed)
+                    errors.Add($"El tamaño máximo permitido es {maxAllowed:F2} KB.");
+            }
+
+            return errors;
+        }
+
 
     }
 

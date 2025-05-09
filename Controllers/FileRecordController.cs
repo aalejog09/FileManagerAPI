@@ -13,50 +13,29 @@ public class FileRecordController : ControllerBase
         _fileService = fileService;
     }
 
+    [DisableRequestSizeLimit] //desabilita el maximo permitido por el servidor de app para que el midleware valide.
     [HttpPost("upload")]
     public async Task<IActionResult> UploadFile([FromForm] UploadFileDTO request)
     {
-        if (request.File == null || request.File.Length == 0)
-            return BadRequest("No file provided.");
-
-        if (string.IsNullOrEmpty(request.Clave) || string.IsNullOrEmpty(request.Path))
-            return BadRequest("Clave and Path are required.");
-
-        try
-        {
-            string filePath = await _fileService.SaveFileAsync(request);
-            return Ok(new { Message = "File uploaded successfully.", FilePath = filePath });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        return Ok(await _fileService.SaveFileAsync(request));
     }
 
     [HttpGet("download")]
     public async Task<IActionResult> DownloadFile([FromQuery] string filePath)
     {
-        if (string.IsNullOrEmpty(filePath) || !System.IO.File.Exists(filePath))
-            return NotFound("File not found.");
 
-        byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+        byte[] file = await _fileService.GetFileAsBytesAsync(filePath);
         string fileName = Path.GetFileName(filePath);
 
-        return File(fileBytes, "application/octet-stream", fileName);
+        return File(file, "application/octet-stream", fileName);
     }
 
     [HttpGet("download/base64")]
     public async Task<IActionResult> GetFileAsBase64([FromQuery] string filePath)
     {
-        try
-        {
             string base64 = await _fileService.GetFileAsBase64Async(filePath);
             return Ok(new { FileBase64 = base64 });
-        }
-        catch (FileNotFoundException)
-        {
-            return NotFound("File not found.");
-        }
+        
     }
 
 
@@ -64,11 +43,8 @@ public class FileRecordController : ControllerBase
     public async Task<IActionResult> GetFilesByClave([FromQuery] string key)
     {
         var files = await _fileService.GetFilesByClaveAsync(key);
-
-        if (files == null || files.Count == 0)
-            return NotFound("No files found for the given key.");
-
         return Ok(files);
     }
 
 }
+ 

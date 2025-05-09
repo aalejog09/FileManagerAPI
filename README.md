@@ -121,13 +121,28 @@ Los datos de los Json estan especificados en el servicio de **SWAGGER** configur
 
 ##### **Crear extension** 
 HTTP POST **Registrar tipo de extencion: server/api/supportedFile/save**
+
+Request Body:
 ```json
 {
   "extension": "pdf", // nombre del tipo de extension
-  "maxSizeKB": 185000 // peso maximo permitido para los archivos de este tipo de extension especificado en KB
+  "maxSizeKB": "10240" // peso maximo permitido para los archivos de este tipo de extension especificado en KB
 }
 ```
 
+Response OK:
+```json
+{
+    "status": "Success",
+    "code": 201,
+    "message": "Extension registrada con éxito.",
+    "data": {
+        "extension": "pdf",
+        "maxSizeKB": "22,00 KB",
+        "status": true
+    }
+}
+```
 PD: todas las extenciones se registran con status True, lo que indicara Activo. 
     Todas las extenciones son unicas, por lo que solo puede existir un tipo de extencion con nombre unico. (no sensible a Mayus o Minus pdf y PDF es lo mismo.)
 
@@ -150,8 +165,12 @@ Si no existe se muestra el mensaje:
 
 ```json
 {
-    "message": "the extension [.aaaa] does not exist.",
-    "data": "{}"
+    "code": 404,
+    "message": "Recurso no encontrado",
+    "detail": [
+        "El recurso solicitado no pudo ser encontrado.",
+        "No se encontró la extension: [pngaaaa]."
+    ]
 }
 ```
 
@@ -162,7 +181,9 @@ se muestra una lista de las extensiones con su tama�o de archivo soportado (en
 
 ```json
 {
-    "message": "OK",
+    "status": "Success",
+    "code": 200,
+    "message": "Extensiones encontradas",
     "data": [
         {
             "extension": "pdf",
@@ -188,15 +209,17 @@ se muestra una lista de las extensiones con su tama�o de archivo soportado (en
 HTTP PUT **UpdateExtensionMaxSizeKB server/api/supportedFile/update?extension={extension}&maxSizeKB={maxSizeKB}**
 Solo actualiza el peso de la extension.
 
-Si existe mostrara el siguiente mensaje (extension=pdf , maxSizeKB=10000)
+Si existe mostrara el siguiente mensaje (extension=xlsx , maxSizeKB=1222)
 
 ```json
 {
-    "message": "The file extension [.pdf] was updated successfully.",
+    "status": "Success",
+    "code": 200,
+    "message": "Extension actualizada con éxito.",
     "data": {
-        "extension": "pdf",
-        "maxSizeKB": 11111,
-        "status": false
+        "extension": "xlsx",
+        "maxSizeKB": "1222,00 KB",
+        "status": true
     }
 }
 ```
@@ -205,14 +228,16 @@ Si existe mostrara el siguiente mensaje (extension=pdf , maxSizeKB=10000)
 HTTP PUT **UpdateExtensionStatus server/api/supportedFile/update?extension={extension}&status={status}**
 Solo actualiza el status de la extension.
 
-Si existe mostrara el siguiente mensaje (extension=pdf , status=true)
+Si existe mostrara el siguiente mensaje (extension=xlsx , status=true)
 
 ```json
 {
-    "message": "The status of the file extension [.pdf ] was updated successfully.",
+    "status": "Success",
+    "code": 200,
+    "message": "Extension actualizada con éxito.",
     "data": {
-        "extension": "pdf",
-        "maxSizeKB": 11111,
+        "extension": "xlsx",
+        "maxSizeKB": "1222,00 KB",
         "status": true
     }
 }
@@ -236,6 +261,7 @@ El Cuerpo de la peticion debe ser un Form-data
 ```plaintext
 clave: CARPETA_FINAL // es la ultima carpeta para identificar al "due�o del archivo", por ejemplo un rif V123456
 path: CARPETA_RAIZ  // ejemplo C:\\uploads para guardar en la carpeta del disco C: llamada uploads 
+fileName: nombre_del_archivo //este nombre es asignado ignoirando el nombre original del archivo.
 archivo: [Archivo adjunto] // el archivo a subir
 ```
 
@@ -245,12 +271,14 @@ asi como se muestra en la imagen :
 
 el resultado de guardar exitosamente un archivo seria: 
 
-teniendo en cuenta los datos : Clave=V1234566 , path= C:\\UPLOADS\\ , file=imagenDePrueba.png
+teniendo en cuenta los datos : Clave=V1234566 , path= BASE\V1234566\ARA001\ , file=imagenDePrueba.png, FileName= "estóEsU n nombre b4+stan3te#xtasda wdesdasfa"
 
 ```json
 {
-    "message": "File uploaded successfully.",
-    "filePath": "C:\\\\UPLOADS\\\\V1234566\\imagenDePrueba.png"
+    "status": "Success",
+    "code": 200,
+    "message": "Archivo cargado con éxito.",
+    "data": "UPLOADS\\V1234566\\ARA001\\ESTOESU_N_NOMBRE_B4S.png" //el nombre pasa por un proceso de validacion y truncado.
 }
 ```
 
@@ -265,15 +293,35 @@ Este servicio permite listar las rutas a los archivos de acuerdo al valor "clave
 
 teniendo en cuenta el ejemplo anterior, se haria la consulta con el key=V1234566  y la respuesta seria:
 
+En caso de respuesta exitosa: 200
 
 ```json
-[
-    {
-        "filePath": "C:\\\\UPLOADS\\\\V1234566\\imagenDePrueba.png", //ruta absoluta al archivo
-        "createdAt": "2025-03-27", //fecha de creacion del archivo
-        "size": 182.15  //recordar que esto esta expresado en KB
-    }
-]
+{
+    "status": "Success",
+    "code": 200,
+    "message": "Archivos encontrados con éxito.",
+    "data": [
+        {
+            "fileName": "ESTOESU_N_NOMBRE_B4S.png",
+            "filePath": "BASE\\V1234566\\ARA001\\UDSA\\ESTOESU_N_NOMBRE_B4S.xlsx",
+            "createdAt": "2025-04-30 13:17:54",
+            "size": "6,44 KB"
+        }
+    ]
+}
+```
+
+Respuesta 404 :
+
+```json
+{
+    "code": 404,
+    "message": "Recurso no encontrado",
+    "detail": [
+        "El recurso solicitado no pudo ser encontrado.",
+        "Archivos no encontrados"
+    ]
+}
 ```
 
 ##### **Descargar archivo por ruta (archivo)**  
@@ -288,7 +336,6 @@ ejemplo:
 Al consultar el servicio se obtiene el archivo para ser descargado de manera inmediata y se debe observar en el navegador la siguiente forma:
 
 ![Imagen de prueba](https://github.com/aalejog09/FileManagerAPI/blob/main/doc/ExampleDownloadSuccess.png?raw=true)
-
 ##### **Descargar archivo por ruta (base64)**  
 HTTP GET **downloadFileByPath server/api/files/download/base64?filePath={absolutePath}**
 

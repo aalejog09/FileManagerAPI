@@ -1,4 +1,6 @@
+using FileManagerAPI.Middleware;
 using FileManagerAPI.Services;
+using FileManagerAPI.Utils;
 using FileStorageApi.Context;
 using FileStorageApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +33,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<FileRecordService>();
 builder.Services.AddScoped<SupportedFileService>();
+builder.Services.AddSingleton<ErrorService>();
+builder.Services.AddSingleton<Utility>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -45,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
